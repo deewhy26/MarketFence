@@ -52,7 +52,8 @@ class _RootPageState extends State<RootPage> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: Color(0xff0d1015),
+      backgroundColor: Colors.white,
+      //Color(0xff0d1015),
       //Color(0xff2A2C28),
       body: IndexedStack(
         index: _bottomNavIndex,
@@ -80,12 +81,15 @@ class _RootPageState extends State<RootPage> {
                       begin:Alignment.topLeft,
                       end:Alignment.bottomRight,
                       colors: [
+
                         Colors.cyanAccent.withOpacity(.7),
                         Colors.cyanAccent.withOpacity(.5),
                         Colors.cyanAccent.withOpacity(.3),
+
                         // Color(0xff00b0ee).withOpacity(.7),
                         // Color(0xff00b0ee).withOpacity(.5),
                         // Color(0xff00b0ee).withOpacity(.3),
+
                         // Colors.white.withOpacity(0.4),
                         // Colors.white70.withOpacity(0.1),
                       ]
@@ -95,16 +99,16 @@ class _RootPageState extends State<RootPage> {
           ),
           FloatingNavigationBar(
           backgroundColor: Colors.transparent,
-          iconColor: Colors.white,
+          iconColor: Colors.black87,
           textStyle: TextStyle(
-            color: Colors.white,
+            color: Colors.black87,
             fontSize: 14.0,
           ),
           iconSize: 20.0,
           //barHeight: 20,
           indicatorHeight: 4,
           indicatorWidth: 40,
-          indicatorColor: Colors.white70.withOpacity(0.4),
+          indicatorColor: Colors.black38.withOpacity(0.4),
           items: [
             NavBarItems(icon:Icons.dashboard,title: "Dashboard"),
             NavBarItems( icon: Icons.search,title: "Explore"),

@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        fontFamily: "Lexend_Deca",
         primarySwatch: Colors.blue,
       ),
       home: LoginPage(),
