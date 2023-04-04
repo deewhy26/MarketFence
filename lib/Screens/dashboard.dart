@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/Offers.dart';
-
+import 'package:geofence_service/geofence_service.dart';
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
 
@@ -19,6 +19,27 @@ class _DashboardState extends State<Dashboard> {
     print(height);
     print(width);
     List<Offer> offerList=Offer.offerList;
+    final _geofenceService = GeofenceService.instance.setup(
+        interval: 5000,
+        accuracy: 100,
+        loiteringDelayMs: 60000,
+        statusChangeDelayMs: 10000,
+        useActivityRecognition: true,
+        allowMockLocations: false,
+        printDevLog: false,
+        geofenceRadiusSortType: GeofenceRadiusSortType.DESC);
+    final _geofenceList = <Geofence>[
+    Geofence(
+    id: 'place_1',
+    latitude: 35.103422,
+    longitude: 129.036023,
+    radius: [
+    GeofenceRadius(id: 'radius_100m', length: 100),
+    GeofenceRadius(id: 'radius_25m', length: 25),
+    GeofenceRadius(id: 'radius_250m', length: 250),
+    GeofenceRadius(id: 'radius_200m', length: 200),
+    ],
+    ),];
     return
         Scaffold(
 

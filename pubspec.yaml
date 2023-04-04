@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   floating_navigation_bar: ^0.0.5
   lottie: ^2.3.1
+  geofence_service: ^3.5.0
 #  curved_navigation_bar: ^1.0.3
 #  glassmorphism: ^3.0.0
 
