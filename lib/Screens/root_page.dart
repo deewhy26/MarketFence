@@ -52,39 +52,35 @@ class _RootPageState extends State<RootPage> {
 
   // Create a [GeofenceService] instance and set options.
   final _geofenceService = GeofenceService.instance.setup(
-      interval: 5000,
+      interval: 1000,
       accuracy: 100,
-      loiteringDelayMs: 60000,
-      statusChangeDelayMs: 10000,
+      loiteringDelayMs: 6000,
+      statusChangeDelayMs: 1000,
       useActivityRecognition: true,
       allowMockLocations: false,
       printDevLog: false,
-      geofenceRadiusSortType: GeofenceRadiusSortType.DESC);
+      geofenceRadiusSortType: GeofenceRadiusSortType.ASC);
 
   // Create a [Geofence] list.
   final _geofenceList = <Geofence>[
     Geofence(
       id: 'place_1',
-      latitude: 19.32346,
-      longitude: 72.8761633,
+      latitude: 19.038,
+      longitude: 72.965,
       radius: [
-        GeofenceRadius(id: 'radius_100m', length: 100),
-        GeofenceRadius(id: 'radius_25m', length: 25),
-        GeofenceRadius(id: 'radius_250m', length: 250),
-        GeofenceRadius(id: 'radius_200m', length: 200),
+        GeofenceRadius(id: 'radius_250m', length: 4000),
       ],
     ),
-    Geofence(
-      id: 'place_2',
-      latitude: 35.104971,
-      longitude: 129.034851,
-      radius: [
-        GeofenceRadius(id: 'radius_25m', length: 25),
-        GeofenceRadius(id: 'radius_100m', length: 100),
-        GeofenceRadius(id: 'radius_200m', length: 200),
-      ],
-    ),
-  ];
+    // Geofence(
+    //   id: 'place_2',
+    //   latitude: 35.104971,
+    //   longitude: 129.034851,
+    //   radius: [
+    //     GeofenceRadius(id: 'radius_25m', length: 25),
+    //     GeofenceRadius(id: 'radius_100m', length: 100),
+    //     GeofenceRadius(id: 'radius_200m', length: 200),
+      ];
+
 
   // This function is to be called when the geofence status is changed.
   Future<void> _onGeofenceStatusChanged(
@@ -108,6 +104,7 @@ class _RootPageState extends State<RootPage> {
   // This function is to be called when the location has changed.
   void _onLocationChanged(Location location) {
     print('location: ${location.toJson()}');
+
   }
 
 
