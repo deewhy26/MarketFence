@@ -16,7 +16,7 @@ import 'package:market_fence/notificationservice.dart';
 
 import '../models/Offers.dart';
 
-
+final List<Offer> toDisplay = [];
 // Create a [Geofence] list.
 class geofenceController extends GetxController {
   final geofenceList = <Geofence>[
@@ -30,20 +30,27 @@ class geofenceController extends GetxController {
     //     GeofenceRadius(id: 'radius_100m', length: 100),
     //     GeofenceRadius(id: 'radius_200m', length: 200),
   ];
-  final List<Offer> toDisplay = [];
 
-  void check_avail() {
+
+  void check_avail(Location location) {
 
     for (int i = 0; i < geofenceList.length; i += 1) {
-      print(geofenceList[i].remainingDistance);
-      print(geofenceList[i].status.toString());
-      if (geofenceList[i].status.toString() == "GeofenceStatus.ENTER" || geofenceList[i].status.toString() == "GeofenceStatus.DWELL") {
-        NotificationService().showNotification(Offer.offerList[i].offerId, Offer.offerList[i].title,Offer.offerList[i].desc, 4 );
-        toDisplay.add(Offer.offerList[i]);
-      }
-      else {
-        NotificationService().showNotification(Offer.offerList[i].offerId, Offer.offerList[i].title,Offer.offerList[i].desc, 4 );
-        if (toDisplay.isNotEmpty) {
+      var remDistance = Geolocator.distanceBetween(geofenceList[i].latitude, geofenceList[i].longitude, location.latitude, location.longitude);
+
+      // print(geofenceList[i].status.toString());
+      // if (geofenceList[i].status.toString() == "GeofenceStatus.ENTER" || geofenceList[i].status.toString() == "GeofenceStatus.DWELL") {
+      //   NotificationService().showNotification(Offer.offerList[i].offerId, Offer.offerList[i].title,Offer.offerList[i].desc, 4 );
+      //   toDisplay.add(Offer.offerList[i]);
+      // }
+    if (remDistance <= geofenceList[i].radius[0].length && !toDisplay.contains(Offer.offerList[i])) {
+      NotificationService().showNotification(Offer.offerList[i].offerId, Offer.offerList[i].title,Offer.offerList[i].desc, 4 );
+      print(Offer.offerList[i]);
+      toDisplay.add(Offer.offerList[i]);
+    }
+
+      else if (remDistance > geofenceList[i].radius[0].length){
+        // NotificationService().showNotification(Offer.offerList[i].offerId, Offer.offerList[i].title,Offer.offerList[i].desc, 4 );
+        if (toDisplay.isNotEmpty ) {
           toDisplay.remove(Offer.offerList[i]);
         }
       }
@@ -106,12 +113,12 @@ class RootPageState extends State<RootPage> {
 
   // Create a [GeofenceService] instance and set options.
   final _geofenceService = GeofenceService.instance.setup(
-      interval: 4000,
-      accuracy: 1000,
-      loiteringDelayMs: 4000,
-      statusChangeDelayMs: 1000,
-      useActivityRecognition: false,
-      allowMockLocations: false,
+      interval: 5000,
+      accuracy: 100,
+      loiteringDelayMs: 300000,
+      statusChangeDelayMs: 10000,
+      useActivityRecognition: true,
+      allowMockLocations: true,
       printDevLog: false,
       geofenceRadiusSortType: GeofenceRadiusSortType.ASC);
 
@@ -147,8 +154,8 @@ class RootPageState extends State<RootPage> {
     print('geofence: ${geofence.toJson()}');
     print('geofenceRadius: ${geofenceRadius.toJson()}');
     print('geofenceStatus: ${geofenceStatus.toString()}');
-    checkOffers.check_avail();
-    print(checkOffers.toDisplay);
+    // checkOffers.check_avail(Position);
+    // print(checkOffers.toDisplay);
     _geofenceStreamController.sink.add(geofence);
   }
 
@@ -156,16 +163,17 @@ class RootPageState extends State<RootPage> {
   void _onActivityChanged(Activity prevActivity, Activity currActivity) {
     print('prevActivity: ${prevActivity.toJson()}');
     print('currActivity: ${currActivity.toJson()}');
-    checkOffers.check_avail();
-    print(checkOffers.toDisplay);
+    //checkOffers.check_avail(location);
+    // print(checkOffers.toDisplay);
     _activityStreamController.sink.add(currActivity);
   }
 
   // This function is to be called when the location has changed.
   void _onLocationChanged(Location location) {
+    checkOffers.check_avail(location);
+    print(toDisplay);
     print('location: ${location.toJson()}');
-    checkOffers.check_avail();
-    print(checkOffers.toDisplay);
+
 
 
   }

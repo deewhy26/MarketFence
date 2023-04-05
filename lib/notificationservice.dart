@@ -54,7 +54,7 @@ class NotificationService {
           sound: 'default.wav',
           presentAlert: true,
           presentBadge: true,
-          presentSound: true,
+          presentSound: false,
         ),
       ),
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:market_fence/Screens/root_page.dart';
+import 'package:market_fence/Screens/root_page.dart';
 
 import '../models/Offers.dart';
 import 'detail_page.dart';
@@ -53,8 +54,12 @@ class DashboardState extends State<Dashboard> {
     print(geofences);
 
     final geofenceController checkOffers = Get.find<geofenceController>();
-    List<Offer> toDisplay = checkOffers.toDisplay;
+    // List<Offer> todisplay = toDisplay;
+    if (toDisplay.isNotEmpty) {
+        setState(() {
 
+        });
+    }
 
 
 
