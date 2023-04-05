@@ -1,11 +1,10 @@
-
 import 'dart:ui';
 
 import 'package:floating_navigation_bar/floating_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:market_fence/Screens/bank_page.dart';
 import 'package:market_fence/Screens/dashboard.dart';
-import 'package:market_fence/Screens/explore_page.dart';
+import 'package:market_fence/Screens/ExplorePage.dart';
 import 'package:market_fence/Screens/profile_page.dart';
 
 class RootPage extends StatefulWidget {
@@ -47,8 +46,8 @@ class _RootPageState extends State<RootPage> {
   ];
   @override
   Widget build(BuildContext context) {
-    final height=MediaQuery.of(context).size.height;
-    final width=MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -60,44 +59,35 @@ class _RootPageState extends State<RootPage> {
         children: _widgetOptions(),
       ),
 
-      bottomNavigationBar:
+      bottomNavigationBar: Stack(children: [
+        BackdropFilter(filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2)),
+        Positioned(
+          bottom: 20,
+          left: width * .04,
+          child: Container(
+            height: height * .09,
+            width: width * .92,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.white.withOpacity(.4)),
+                borderRadius: BorderRadius.circular(25),
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.cyanAccent.withOpacity(.7),
+                      Colors.cyanAccent.withOpacity(.5),
+                      Colors.cyanAccent.withOpacity(.3),
 
-      Stack(
-        children:[
-          BackdropFilter(filter: ImageFilter.blur(
-            sigmaX: 2,
-            sigmaY: 2
-          )),
-          Positioned(
-            bottom:20 ,
-            left: width*.04,
-            child: Container(
-              height: height*.09,
-              width: width*.92,
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white.withOpacity(.4)),
-                  borderRadius: BorderRadius.circular(25),
-                  gradient: LinearGradient(
-                      begin:Alignment.topLeft,
-                      end:Alignment.bottomRight,
-                      colors: [
+                      // Color(0xff00b0ee).withOpacity(.7),
+                      // Color(0xff00b0ee).withOpacity(.5),
+                      // Color(0xff00b0ee).withOpacity(.3),
 
-                        Colors.cyanAccent.withOpacity(.7),
-                        Colors.cyanAccent.withOpacity(.5),
-                        Colors.cyanAccent.withOpacity(.3),
-
-                        // Color(0xff00b0ee).withOpacity(.7),
-                        // Color(0xff00b0ee).withOpacity(.5),
-                        // Color(0xff00b0ee).withOpacity(.3),
-
-                        // Colors.white.withOpacity(0.4),
-                        // Colors.white70.withOpacity(0.1),
-                      ]
-                  )
-              ),
-            ),
+                      // Colors.white.withOpacity(0.4),
+                      // Colors.white70.withOpacity(0.1),
+                    ])),
           ),
-          FloatingNavigationBar(
+        ),
+        FloatingNavigationBar(
           backgroundColor: Colors.transparent,
           iconColor: Colors.black87,
           textStyle: TextStyle(
@@ -110,20 +100,18 @@ class _RootPageState extends State<RootPage> {
           indicatorWidth: 40,
           indicatorColor: Colors.black38.withOpacity(0.4),
           items: [
-            NavBarItems(icon:Icons.dashboard,title: "Dashboard"),
-            NavBarItems( icon: Icons.search,title: "Explore"),
+            NavBarItems(icon: Icons.dashboard, title: "Dashboard"),
+            NavBarItems(icon: Icons.search, title: "Explore"),
             NavBarItems(icon: Icons.account_balance_outlined, title: "Bank"),
-            NavBarItems(icon: Icons.person_outline,title: "Profile"),
+            NavBarItems(icon: Icons.person_outline, title: "Profile"),
           ],
           onChanged: (value) {
-           setState(() {
-             _bottomNavIndex=value;
-           });
+            setState(() {
+              _bottomNavIndex = value;
+            });
           },
         ),
-        ]
-      ),
-
+      ]),
 
       // CurvedNavigationBar(
       //   // backgroundColor: Colors.transparent,
