@@ -1,8 +1,11 @@
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../models/Offers.dart';
 import 'detail_page.dart';
+import 'package:geofence_service/geofence_service.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -17,10 +20,19 @@ class _DashboardState extends State<Dashboard> {
     int selectedIndex=0;
     final height=MediaQuery.of(context).size.height;
     final width=MediaQuery.of(context).size.width;
-    print(height);
-    print(width);
+    // print(height);
+    // print(width);
+
+    //geofencing init
+    // Create a [GeofenceService] instance and set options.
+
+
+    List<Offer> to_display_list;
+    //geofencing init ends
+
     List<Offer> offerList=Offer.offerList;
     return
+
         Scaffold(
 
           backgroundColor: Colors.transparent,
@@ -224,3 +236,5 @@ class _DashboardState extends State<Dashboard> {
     // );
   }
 }
+
+
