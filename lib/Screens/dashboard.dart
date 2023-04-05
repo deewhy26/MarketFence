@@ -22,7 +22,6 @@ class _DashboardState extends State<Dashboard> {
     List<Offer> offerList=Offer.offerList;
     return
         Scaffold(
-
           backgroundColor: Colors.transparent,
             body: Stack(
               children: [
@@ -64,156 +63,158 @@ class _DashboardState extends State<Dashboard> {
                     )
                 ),
 
-                Column(
-                    children: [
-                      SizedBox(height:height*.04),
-                      Row(children: [
-                        SizedBox(width: width*.82,),
-                       //Image.asset(name),
-                       // Text('Welcome',style:TextStyle(color: Colors.white70,fontSize:35))
-                      ],),
-                      SizedBox(height:height*.03),
-                      Row(children: [
-                        SizedBox(width: width*.05,),
+                SingleChildScrollView(
+                  child: Column(
+                      children: [
+                        SizedBox(height:height*.04),
+                        Row(children: [
+                          SizedBox(width: width*.82,),
+                         //Image.asset(name),
+                         // Text('Welcome',style:TextStyle(color: Colors.white70,fontSize:35))
+                        ],),
+                        SizedBox(height:height*.03),
+                        Row(children: [
+                          SizedBox(width: width*.05,),
 
-                        Text('Welcome',style:TextStyle(color: Colors.white70,fontSize:30))
-                      ],),
-                      Row(children: [
-                        SizedBox(width: width*.05,),
-                        Text('Welcome,Dhruv!',style:TextStyle(color: Color(0xff0391C6),fontSize:35))
-                      ],),
-                      SizedBox(height:height*.05),
+                          Text('Welcome',style:TextStyle(color: Colors.white70,fontSize:30))
+                        ],),
+                        Row(children: [
+                          SizedBox(width: width*.05,),
+                          Text('Welcome,Dhruv!',style:TextStyle(color: Color(0xff0391C6),fontSize:35))
+                        ],),
+                        SizedBox(height:height*.05),
 
-                      Container(
-                        //color: Colors.purple,
-                         // padding: const EdgeInsets.symmetric(horizontal: 5),
-                          height: height*.115,//100.0,
-                          width: width,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: 10,
-                              itemBuilder: (BuildContext context,int index){
-                                return GestureDetector(
-                                  onTap:(){
-                                    setState(() {
-                                     selectedIndex=index;
-                                    });
-                                  } ,
-                                  child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: width*.0243),
-                child:
-                Stack(
-                  children:[ CircleAvatar(
-                    backgroundColor: Color(0xff00AEEF),
-                    //Colors.white70,
-                    radius: width*.1,
+                        Container(
+                          //color: Colors.purple,
+                           // padding: const EdgeInsets.symmetric(horizontal: 5),
+                            height: height*.115,//100.0,
+                            width: width,
+                            child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: 10,
+                                itemBuilder: (BuildContext context,int index){
+                                  return GestureDetector(
+                                    onTap:(){
+                                      setState(() {
+                                       selectedIndex=index;
+                                      });
+                                    } ,
+                                    child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width*.0243),
+                  child:
+                  Stack(
+                    children:[ CircleAvatar(
+                      backgroundColor: Color(0xff00AEEF),
+                      //Colors.white70,
+                      radius: width*.1,
+                    ),
+                      Positioned(
+                          top:height*0.1,
+                          left:width*0.0632,
+                          child: Text("haha,",style: TextStyle(color:Colors.white70),)
+                      )
+                    ]
+                  )
+
                   ),
-                    Positioned(
-                        top:height*0.1,
-                        left:width*0.0632,
-                        child: Text("haha,",style: TextStyle(color:Colors.white70),)
-                    )
-                  ]
-                )
-
-                ),
               );
             }),
 
       ),
-                      SizedBox(height:height*.1385),
-                  Row(children:[
-                    SizedBox(width:width*.06),
-                    Text("Offers Nearby!",style:TextStyle(color: Color(0xff0391C6),fontSize: 30,fontWeight: FontWeight.bold))
-                  ]),
-                      SizedBox(height:height*0.023),
-                  Container(
-                  //color: Colors.orange,
-                  height: width*0.6076,
-                  //height*.2,
-                  child: ListView.builder(
-                      itemCount: offerList.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder:(BuildContext context,int index){
-                        return GestureDetector(
-                          onTap:(){
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => DetailPage(offerId: offerList[index].offerId,)));
-                            //Navigator.push(context,PageTransition(child: DetailPage(plantId: offerList[index].plantId,), type: PageTransitionType.bottomToTop));
-                          },
-                          child: Container(
-                            width: width*0.6076,
-                            // height: height*.4,
-                            margin: EdgeInsets.symmetric(horizontal: width*0.0243),
-                            decoration: BoxDecoration(
-                              color: Color(0xff0F3E99),
-                              //Colors.cyan.withOpacity(.8),
-                              borderRadius: BorderRadius.circular(width*0.0486),
-                            ),
-                            child:
-                            Stack(
-                              children: [
-                                // Positioned(
-                                //   top:10,
-                                //   right:20,
-                                //   child: Container(
-                                //     height: 50,
-                                //     width: 50,
-                                //     child: IconButton(
-                                //       onPressed:(){
-                                //         bool isFavorated =!Offer.offerList[index].isFavorated;
-                                //         offerList[index].isFavorated=isFavorated;
-                                //       },
-                                //       icon:Icon(Offer.offerList[index].isFavorated==true
-                                //           ? Icons.favorite : Icons.favorite_border, color: Color(0xff0F3E99),),
-                                //       color: Colors.white70,
-                                //       iconSize: 30,
-                                //     ),
-                                //     decoration: BoxDecoration(
-                                //       color:Colors.white,
-                                //       borderRadius: BorderRadius.circular(50),
-                                //
-                                //     ),
-                                //   ),
-                                // ),
-                                Positioned(
-                                  left: width*0.122,
-                                  right:width*0.122 ,
-                                  top: height*0.0577,
-                                  bottom: height*0.0577,
-                                  child: Image.asset(offerList[index].imageURL),),
-                                Positioned(
-                                  top: 15,
-                                  left:7,
-                                  //right: 20,
-                                  child: Column(
-                                  children: [
-                                    Text(
-                                      //"ll",
-                                      offerList[index].title,
-                                      style:const TextStyle(
-                                        color:Colors.white70,
-                                        fontSize:16,
+                        SizedBox(height:height*.1385),
+                    Row(children:[
+                      SizedBox(width:width*.06),
+                      Text("Offers Nearby!",style:TextStyle(color: Color(0xff0391C6),fontSize: 30,fontWeight: FontWeight.bold))
+                    ]),
+                        SizedBox(height:height*0.023),
+                    Container(
+                    //color: Colors.orange,
+                    height: width*0.6076,
+                    //height*.2,
+                    child: ListView.builder(
+                        itemCount: offerList.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder:(BuildContext context,int index){
+                          return GestureDetector(
+                            onTap:(){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => DetailPage(offerId: offerList[index].offerId,)));
+                              //Navigator.push(context,PageTransition(child: DetailPage(plantId: offerList[index].plantId,), type: PageTransitionType.bottomToTop));
+                            },
+                            child: Container(
+                              width: width*0.6076,
+                              // height: height*.4,
+                              margin: EdgeInsets.symmetric(horizontal: width*0.0243),
+                              decoration: BoxDecoration(
+                                color: Color(0xff0F3E99),
+                                //Colors.cyan.withOpacity(.8),
+                                borderRadius: BorderRadius.circular(width*0.0486),
+                              ),
+                              child:
+                              Stack(
+                                children: [
+                                  // Positioned(
+                                  //   top:10,
+                                  //   right:20,
+                                  //   child: Container(
+                                  //     height: 50,
+                                  //     width: 50,
+                                  //     child: IconButton(
+                                  //       onPressed:(){
+                                  //         bool isFavorated =!Offer.offerList[index].isFavorated;
+                                  //         offerList[index].isFavorated=isFavorated;
+                                  //       },
+                                  //       icon:Icon(Offer.offerList[index].isFavorated==true
+                                  //           ? Icons.favorite : Icons.favorite_border, color: Color(0xff0F3E99),),
+                                  //       color: Colors.white70,
+                                  //       iconSize: 30,
+                                  //     ),
+                                  //     decoration: BoxDecoration(
+                                  //       color:Colors.white,
+                                  //       borderRadius: BorderRadius.circular(50),
+                                  //
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  Positioned(
+                                    left: width*0.122,
+                                    right:width*0.122 ,
+                                    top: height*0.0577,
+                                    bottom: height*0.0577,
+                                    child: Image.asset(offerList[index].imageURL),),
+                                  Positioned(
+                                    top: 15,
+                                    left:7,
+                                    //right: 20,
+                                    child: Column(
+                                    children: [
+                                      Text(
+                                        //"ll",
+                                        offerList[index].title,
+                                        style:const TextStyle(
+                                          color:Colors.white70,
+                                          fontSize:16,
 
+                                      ),
                                     ),
-                                  ),
-                                  ],
-                                  ),),
+                                    ],
+                                    ),),
 
-                              ],
+                                ],
+                              ),
+
+
                             ),
 
+                          );
+                        }
+                    ),
 
-                          ),
-
-                        );
-                      }
                   ),
-
+                      ],
+                    ),
                 ),
-                    ],
-                  ),
 
 
               ],
