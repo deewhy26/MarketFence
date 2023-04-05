@@ -52,7 +52,9 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
-
+    configurations.all {
+        resolutionStrategy.force 'com.google.android.gms:play-services-location:20.0.0'
+    }
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
