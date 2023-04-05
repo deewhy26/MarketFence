@@ -12,6 +12,7 @@ import 'package:market_fence/Screens/bank_page.dart';
 import 'package:market_fence/Screens/dashboard.dart';
 import 'package:market_fence/Screens/explore_page.dart';
 import 'package:market_fence/Screens/profile_page.dart';
+import 'package:market_fence/notificationservice.dart';
 
 import '../models/Offers.dart';
 
@@ -29,16 +30,36 @@ class geofenceController extends GetxController {
     //     GeofenceRadius(id: 'radius_100m', length: 100),
     //     GeofenceRadius(id: 'radius_200m', length: 200),
   ];
+  final List<Offer> toDisplay = [];
+
+  void check_avail() {
+
+    for (int i = 0; i < geofenceList.length; i += 1) {
+      print(geofenceList[i].remainingDistance);
+      print(geofenceList[i].status.toString());
+      if (geofenceList[i].status.toString() == "GeofenceStatus.ENTER" || geofenceList[i].status.toString() == "GeofenceStatus.DWELL") {
+        NotificationService().showNotification(Offer.offerList[i].offerId, Offer.offerList[i].title,Offer.offerList[i].desc, 4 );
+        toDisplay.add(Offer.offerList[i]);
+      }
+      else {
+        NotificationService().showNotification(Offer.offerList[i].offerId, Offer.offerList[i].title,Offer.offerList[i].desc, 4 );
+        if (toDisplay.isNotEmpty) {
+          toDisplay.remove(Offer.offerList[i]);
+        }
+      }
+    }
+  }
+
 }
 
 class RootPage extends StatefulWidget {
   const RootPage({Key? key}) : super(key: key);
 
   @override
-  State<RootPage> createState() => _RootPageState();
+  State<RootPage> createState() => RootPageState();
 }
 
-class _RootPageState extends State<RootPage> {
+class RootPageState extends State<RootPage> {
   // final _geofenceList = <Geofence>[
   //
   //   // Geofence(
@@ -51,6 +72,7 @@ class _RootPageState extends State<RootPage> {
   //   //     GeofenceRadius(id: 'radius_200m', length: 200),
   // ];
   int _bottomNavIndex = 0;
+
   List<Widget> _widgetOptions() {
     return [
       Dashboard(),
@@ -85,35 +107,48 @@ class _RootPageState extends State<RootPage> {
   // Create a [GeofenceService] instance and set options.
   final _geofenceService = GeofenceService.instance.setup(
       interval: 4000,
-      accuracy: 100,
+      accuracy: 1000,
       loiteringDelayMs: 4000,
       statusChangeDelayMs: 1000,
-      useActivityRecognition: true,
+      useActivityRecognition: false,
       allowMockLocations: false,
       printDevLog: false,
       geofenceRadiusSortType: GeofenceRadiusSortType.ASC);
 
 
   //to add all geofences
-  List<Offer> offerList=Offer.offerList;
+  List<Offer> offerList = Offer.offerList;
   final geofenceController GeofenceContoller = Get.put(geofenceController());
-  final List<Geofence> geofenceList = geofenceController().geofenceList;
-  void addGeofences(){
-    for (int i = 0; i < offerList.length; i +=1) {
-      geofenceList.add(Geofence(id: offerList[i].offerId.toString(), latitude: offerList[i].lat, longitude: offerList[i].long, radius: [GeofenceRadius(id: "rad_5000", length: 5000)]));
-    }
+  late final List<Geofence> geofenceList_local = [];
 
+
+  final geofenceController checkOffers = Get.put(geofenceController());
+
+  void addGeofences() {
+    for (int i = 0; i < offerList.length; i += 1) {
+      GeofenceContoller.geofenceList.add(Geofence(
+          id: offerList[i].offerId.toString(),
+          latitude: offerList[i].lat,
+          longitude: offerList[i].long,
+          radius: [GeofenceRadius(id: "rad_5000", length: 5000)]));
+      geofenceList_local.add(Geofence(id: offerList[i].offerId.toString(),
+          latitude: offerList[i].lat,
+          longitude: offerList[i].long,
+          radius: [GeofenceRadius(id: "rad_5000", length: 5000)]));
+    }
   }
 
+  // final List<Geofence> geofenceList = geofenceController().geofenceList;
   // This function is to be called when the geofence status is changed.
-  Future<void> _onGeofenceStatusChanged(
-      Geofence geofence,
+  Future<void> _onGeofenceStatusChanged(Geofence geofence,
       GeofenceRadius geofenceRadius,
       GeofenceStatus geofenceStatus,
       Location location) async {
     print('geofence: ${geofence.toJson()}');
     print('geofenceRadius: ${geofenceRadius.toJson()}');
     print('geofenceStatus: ${geofenceStatus.toString()}');
+    checkOffers.check_avail();
+    print(checkOffers.toDisplay);
     _geofenceStreamController.sink.add(geofence);
   }
 
@@ -121,21 +156,25 @@ class _RootPageState extends State<RootPage> {
   void _onActivityChanged(Activity prevActivity, Activity currActivity) {
     print('prevActivity: ${prevActivity.toJson()}');
     print('currActivity: ${currActivity.toJson()}');
+    checkOffers.check_avail();
+    print(checkOffers.toDisplay);
     _activityStreamController.sink.add(currActivity);
   }
 
   // This function is to be called when the location has changed.
   void _onLocationChanged(Location location) {
     print('location: ${location.toJson()}');
+    checkOffers.check_avail();
+    print(checkOffers.toDisplay);
+
 
   }
-
-
 
   // This function is to be called when a location services status change occurs
   // since the service was started.
   void _onLocationServicesStatusChanged(bool status) {
     print('isLocationServicesEnabled: $status');
+
   }
 
   // This function is used to handle errors that occur in the service.
@@ -149,138 +188,158 @@ class _RootPageState extends State<RootPage> {
     print('ErrorCode: $errorCode');
   }
 
+
   @override
   void initState() {
     super.initState();
     //add geofences from fetched offer list
     addGeofences();
-    print(geofenceList);
+    print(geofenceList_local);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _geofenceService.addGeofenceStatusChangeListener(_onGeofenceStatusChanged);
+      _geofenceService.addGeofenceStatusChangeListener(
+          _onGeofenceStatusChanged);
       _geofenceService.addLocationChangeListener(_onLocationChanged);
-      _geofenceService.addLocationServicesStatusChangeListener(_onLocationServicesStatusChanged);
+      _geofenceService.addLocationServicesStatusChangeListener(
+          _onLocationServicesStatusChanged);
       _geofenceService.addActivityChangeListener(_onActivityChanged);
       _geofenceService.addStreamErrorListener(_onError);
-      _geofenceService.start(geofenceList).catchError(_onError);
+      _geofenceService.start(geofenceList_local).catchError(_onError);
+
     });
+
   }
+
+
   @override
   Widget build(BuildContext context) {
-    final height=MediaQuery.of(context).size.height;
-    final width=MediaQuery.of(context).size.width;
+    final height = MediaQuery
+        .of(context)
+        .size
+        .height;
+    final width = MediaQuery
+        .of(context)
+        .size
+        .width;
+
 
     return MaterialApp(
       // A widget used when you want to start a foreground task when trying to minimize or close the app.
       // Declare on top of the [Scaffold] widget.
         home: WillStartForegroundTask(
-        onWillStart: () async {
-      // You can add a foreground task start condition.
-      return _geofenceService.isRunningService;
-    },
-    androidNotificationOptions: AndroidNotificationOptions(
-    channelId: 'geofence_service_notification_channel',
-    channelName: 'Geofence Service Notification',
-    channelDescription: 'This notification appears when the geofence service is running in the background.',
-    channelImportance: NotificationChannelImportance.LOW,
-    priority: NotificationPriority.LOW,
-    isSticky: false,
-    ),
-    iosNotificationOptions: const IOSNotificationOptions(),
-    notificationTitle: 'Geofence Service is running',
-    notificationText: 'Tap to return to the app',
-    foregroundTaskOptions: ForegroundTaskOptions(),
-    child:Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: Colors.white,
-      //Color(0xff0d1015),
-      //Color(0xff2A2C28),
-      body: IndexedStack(
-        index: _bottomNavIndex,
-        children: _widgetOptions(),
-      ),
+            onWillStart: () async {
+              // You can add a foreground task start condition.
 
-      bottomNavigationBar:
-
-      Stack(
-        children:[
-          BackdropFilter(filter: ImageFilter.blur(
-            sigmaX: 2,
-            sigmaY: 2
-          )),
-          Positioned(
-            bottom:20 ,
-            left: width*.04,
-            child: Container(
-              height: height*.09,
-              width: width*.92,
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white.withOpacity(.4)),
-                  borderRadius: BorderRadius.circular(25),
-                  gradient: LinearGradient(
-                      begin:Alignment.topLeft,
-                      end:Alignment.bottomRight,
-                      colors: [
-
-                        Colors.cyanAccent.withOpacity(.7),
-                        Colors.cyanAccent.withOpacity(.5),
-                        Colors.cyanAccent.withOpacity(.3),
-
-                        // Color(0xff00b0ee).withOpacity(.7),
-                        // Color(0xff00b0ee).withOpacity(.5),
-                        // Color(0xff00b0ee).withOpacity(.3),
-
-                        // Colors.white.withOpacity(0.4),
-                        // Colors.white70.withOpacity(0.1),
-                      ]
-                  )
-              ),
+              return _geofenceService.isRunningService;
+            },
+            androidNotificationOptions: AndroidNotificationOptions(
+              channelId: 'geofence_service_notification_channel',
+              channelName: 'Geofence Service Notification',
+              channelDescription: 'This notification appears when the geofence service is running in the background.',
+              channelImportance: NotificationChannelImportance.LOW,
+              priority: NotificationPriority.LOW,
+              isSticky: false,
             ),
-          ),
-          FloatingNavigationBar(
-          backgroundColor: Colors.transparent,
-          iconColor: Colors.black87,
-          textStyle: TextStyle(
-            color: Colors.black87,
-            fontSize: 14.0,
-          ),
-          iconSize: 20.0,
-          //barHeight: 20,
-          indicatorHeight: 4,
-          indicatorWidth: 40,
-          indicatorColor: Colors.black38.withOpacity(0.4),
-          items: [
-            NavBarItems(icon:Icons.dashboard,title: "Dashboard"),
-            NavBarItems( icon: Icons.search,title: "Explore"),
-            NavBarItems(icon: Icons.account_balance_outlined, title: "Bank"),
-            NavBarItems(icon: Icons.person_outline,title: "Profile"),
-          ],
-          onChanged: (value) {
-           setState(() {
-             _bottomNavIndex=value;
-           });
-          },
-        ),
-        ]
-      ),
+            iosNotificationOptions: const IOSNotificationOptions(),
+            notificationTitle: 'Geofence Service is running',
+            notificationText: 'Tap to return to the app',
+            foregroundTaskOptions: ForegroundTaskOptions(),
+            child: Scaffold(
+              extendBodyBehindAppBar: true,
+              backgroundColor: Colors.white,
+              //Color(0xff0d1015),
+              //Color(0xff2A2C28),
+              body: IndexedStack(
+                index: _bottomNavIndex,
+                children: _widgetOptions(),
+              ),
+
+              bottomNavigationBar:
+
+              Stack(
+                  children: [
+                    BackdropFilter(filter: ImageFilter.blur(
+                        sigmaX: 2,
+                        sigmaY: 2
+                    )),
+                    Positioned(
+                      bottom: 20,
+                      left: width * .04,
+                      child: Container(
+                        height: height * .09,
+                        width: width * .92,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.white.withOpacity(.4)),
+                            borderRadius: BorderRadius.circular(25),
+                            gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+
+                                  Colors.cyanAccent.withOpacity(.7),
+                                  Colors.cyanAccent.withOpacity(.5),
+                                  Colors.cyanAccent.withOpacity(.3),
+
+                                  // Color(0xff00b0ee).withOpacity(.7),
+                                  // Color(0xff00b0ee).withOpacity(.5),
+                                  // Color(0xff00b0ee).withOpacity(.3),
+
+                                  // Colors.white.withOpacity(0.4),
+                                  // Colors.white70.withOpacity(0.1),
+                                ]
+                            )
+                        ),
+                      ),
+                    ),
+                    FloatingNavigationBar(
+                      backgroundColor: Colors.transparent,
+                      iconColor: Colors.black87,
+                      textStyle: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 14.0,
+                      ),
+                      iconSize: 20.0,
+                      //barHeight: 20,
+                      indicatorHeight: 4,
+                      indicatorWidth: 40,
+                      indicatorColor: Colors.black38.withOpacity(0.4),
+                      items: [
+                        NavBarItems(icon: Icons.dashboard, title: "Dashboard"),
+                        NavBarItems(icon: Icons.search, title: "Explore"),
+                        NavBarItems(icon: Icons.account_balance_outlined,
+                            title: "Bank"),
+                        NavBarItems(
+                            icon: Icons.person_outline, title: "Profile"),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          _bottomNavIndex = value;
+                        });
+                      },
+                    ),
+                  ]
+              ),
 
 
-      // CurvedNavigationBar(
-      //   // backgroundColor: Colors.transparent,
-      //   color: Color(0xff2A2C28),
-      //   buttonBackgroundColor: Color(0xff6FBDB4),
-      //   items: iconList,
-      //   index: _bottomNavIndex,
-      //   backgroundColor: Color(0xff151413),
-      //   // backgroundColor: AppColors.bgcolor40percent,
-      //   // buttonBackgroundColor: Colors.transparent,
-      //
-      //   height: 60,
-      //   onTap: (index) {
-      //     setState(() {
-      //       _bottomNavIndex = index;
-      //     });
-      //   },
-      // ),
-    )));
+              // CurvedNavigationBar(
+              //   // backgroundColor: Colors.transparent,
+              //   color: Color(0xff2A2C28),
+              //   buttonBackgroundColor: Color(0xff6FBDB4),
+              //   items: iconList,
+              //   index: _bottomNavIndex,
+              //   backgroundColor: Color(0xff151413),
+              //   // backgroundColor: AppColors.bgcolor40percent,
+              //   // buttonBackgroundColor: Colors.transparent,
+              //
+              //   height: 60,
+              //   onTap: (index) {
+              //     setState(() {
+              //       _bottomNavIndex = index;
+              //     });
+              //   },
+              // ),
+            )));
   }
+
+
 }
