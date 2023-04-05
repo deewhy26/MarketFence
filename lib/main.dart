@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:market_fence/Screens/login_page.dart';
 import 'package:market_fence/Screens/root_page.dart';
 
-void main() {
+import 'Screens/mongodb.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await MongoDatabase.connect();
   runApp(const MyApp());
 }
 
@@ -22,4 +26,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
