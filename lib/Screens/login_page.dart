@@ -6,14 +6,23 @@ import '../CustomUI/custom_button.dart';
 import '../CustomUI/custom_square_tile.dart';
 import '../CustomUI/custom_textformfield.dart';
 
+
+class User {
+  final String username;
+  final String password;
+
+  User({required this.username, required this.password});
+}
+
+List<User> userList = [
+  User(username: 'user1', password: 'password1'),
+  User(username: 'user2', password: 'password2'),
+  User(username: 'user3', password: 'password3'),
+];
+
 class LoginPage extends StatefulWidget {
    const LoginPage({Key? key}) : super(key: key);
-
-
-
-
-
-  @override
+   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
@@ -24,10 +33,32 @@ class _LoginPageState extends State<LoginPage> {
 
   // sign user in method
   void signUserIn() {
-    Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => RootPage()));
+    String username = usernameController.text;
+    String password = passwordController.text;
+
+    if (checkCredentials(usernameController.text, passwordController.text, userList)) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => RootPage()));
+    }
+    else
+      {
+        print("wrong input");
+      }
+
   }
+  bool checkCredentials(String username, String password, List<User> userList) {
+    for (User user in userList) {
+      if (user.username == username && user.password == password) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     final height=MediaQuery.of(context).size.height;
@@ -97,7 +128,8 @@ class _LoginPageState extends State<LoginPage> {
 
               // sign in button
               MyButton(
-                onTap: signUserIn,
+
+                onTap: signUserIn
               ),
 
               const SizedBox(height: 50),
