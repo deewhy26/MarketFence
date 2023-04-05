@@ -5,10 +5,31 @@ import 'package:geolocator/geolocator.dart';
 import 'package:floating_navigation_bar/floating_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:geofence_service/geofence_service.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:market_fence/Screens/bank_page.dart';
 import 'package:market_fence/Screens/dashboard.dart';
 import 'package:market_fence/Screens/explore_page.dart';
 import 'package:market_fence/Screens/profile_page.dart';
+
+import '../models/Offers.dart';
+
+
+// Create a [Geofence] list.
+class geofenceController extends GetxController {
+  final geofenceList = <Geofence>[
+
+    // Geofence(
+    //   id: 'place_2',
+    //   latitude: 35.104971,
+    //   longitude: 129.034851,
+    //   radius: [
+    //     GeofenceRadius(id: 'radius_25m', length: 25),
+    //     GeofenceRadius(id: 'radius_100m', length: 100),
+    //     GeofenceRadius(id: 'radius_200m', length: 200),
+  ];
+}
 
 class RootPage extends StatefulWidget {
   const RootPage({Key? key}) : super(key: key);
@@ -18,6 +39,17 @@ class RootPage extends StatefulWidget {
 }
 
 class _RootPageState extends State<RootPage> {
+  // final _geofenceList = <Geofence>[
+  //
+  //   // Geofence(
+  //   //   id: 'place_2',
+  //   //   latitude: 35.104971,
+  //   //   longitude: 129.034851,
+  //   //   radius: [
+  //   //     GeofenceRadius(id: 'radius_25m', length: 25),
+  //   //     GeofenceRadius(id: 'radius_100m', length: 100),
+  //   //     GeofenceRadius(id: 'radius_200m', length: 200),
+  // ];
   int _bottomNavIndex = 0;
   List<Widget> _widgetOptions() {
     return [
@@ -52,35 +84,26 @@ class _RootPageState extends State<RootPage> {
 
   // Create a [GeofenceService] instance and set options.
   final _geofenceService = GeofenceService.instance.setup(
-      interval: 1000,
+      interval: 4000,
       accuracy: 100,
-      loiteringDelayMs: 6000,
+      loiteringDelayMs: 4000,
       statusChangeDelayMs: 1000,
       useActivityRecognition: true,
       allowMockLocations: false,
       printDevLog: false,
       geofenceRadiusSortType: GeofenceRadiusSortType.ASC);
 
-  // Create a [Geofence] list.
-  final _geofenceList = <Geofence>[
-    Geofence(
-      id: 'place_1',
-      latitude: 19.038,
-      longitude: 72.965,
-      radius: [
-        GeofenceRadius(id: 'radius_250m', length: 4000),
-      ],
-    ),
-    // Geofence(
-    //   id: 'place_2',
-    //   latitude: 35.104971,
-    //   longitude: 129.034851,
-    //   radius: [
-    //     GeofenceRadius(id: 'radius_25m', length: 25),
-    //     GeofenceRadius(id: 'radius_100m', length: 100),
-    //     GeofenceRadius(id: 'radius_200m', length: 200),
-      ];
 
+  //to add all geofences
+  List<Offer> offerList=Offer.offerList;
+  final geofenceController GeofenceContoller = Get.put(geofenceController());
+  final List<Geofence> geofenceList = geofenceController().geofenceList;
+  void addGeofences(){
+    for (int i = 0; i < offerList.length; i +=1) {
+      geofenceList.add(Geofence(id: offerList[i].offerId.toString(), latitude: offerList[i].lat, longitude: offerList[i].long, radius: [GeofenceRadius(id: "rad_5000", length: 5000)]));
+    }
+
+  }
 
   // This function is to be called when the geofence status is changed.
   Future<void> _onGeofenceStatusChanged(
@@ -129,13 +152,16 @@ class _RootPageState extends State<RootPage> {
   @override
   void initState() {
     super.initState();
+    //add geofences from fetched offer list
+    addGeofences();
+    print(geofenceList);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _geofenceService.addGeofenceStatusChangeListener(_onGeofenceStatusChanged);
       _geofenceService.addLocationChangeListener(_onLocationChanged);
       _geofenceService.addLocationServicesStatusChangeListener(_onLocationServicesStatusChanged);
       _geofenceService.addActivityChangeListener(_onActivityChanged);
       _geofenceService.addStreamErrorListener(_onError);
-      _geofenceService.start(_geofenceList).catchError(_onError);
+      _geofenceService.start(geofenceList).catchError(_onError);
     });
   }
   @override

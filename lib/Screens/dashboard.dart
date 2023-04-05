@@ -2,12 +2,27 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:market_fence/Screens/root_page.dart';
 
 import '../models/Offers.dart';
 import 'detail_page.dart';
+import 'root_page.dart';
 import 'package:geofence_service/geofence_service.dart';
 
 class Dashboard extends StatefulWidget {
+  // final List <Geofence> geofenceList;
+
+  // final List<Geofence> geofenceList= <Geofence>[Geofence(
+  //       id: 'place_2',
+  //       latitude: 35.104971,
+  //       longitude: 129.034851,
+  //       radius: [
+  //         GeofenceRadius(id: 'radius_25m', length: 25),
+  //         GeofenceRadius(id: 'radius_100m', length: 100),
+  //         GeofenceRadius(id: 'radius_200m', length: 200),
+  //  ],)];
   const Dashboard({Key? key}) : super(key: key);
 
   @override
@@ -23,14 +38,25 @@ class _DashboardState extends State<Dashboard> {
     // print(height);
     // print(width);
 
-    //geofencing init
-    // Create a [GeofenceService] instance and set options.
 
 
-    List<Offer> to_display_list;
-    //geofencing init ends
 
     List<Offer> offerList=Offer.offerList;
+    final geofenceController GeofenceContoller = Get.find<geofenceController>();
+
+    List<Geofence> geofences =GeofenceContoller.geofenceList;
+    print("\nWe are the dashboard");
+    print(geofences);
+
+    // void check_avail(Location location){
+    //     for (int i = 0; i < geofenceList.length; i+=1)
+    // }
+
+
+    // List<Offer> toDisplayList;
+    //geofencing init ends
+
+
     return
 
         Scaffold(
