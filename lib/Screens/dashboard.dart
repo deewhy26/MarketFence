@@ -135,7 +135,7 @@ class DashboardState extends State<Dashboard> {
                   ],),
                   Row(children: [
                     SizedBox(width: width * .05,),
-                    Text('Welcome,Dhruv!', style: TextStyle(
+                    Text('Welcome,user1!', style: TextStyle(
                         color: Color(0xff0391C6), fontSize: 35))
                   ],),
                   SizedBox(height: height * .05),
