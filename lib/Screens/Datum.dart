@@ -33,7 +33,7 @@ class Datum {
     required this.title,
     required this.lat,
     required this.long,
-    required this.likeCount,
+    // required this.likeCount,
   });
 
   String brandName;
@@ -41,7 +41,8 @@ class Datum {
   String title;
   String lat;
   String long;
-  String likeCount;
+  // String likeCount;
+
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         brandName: json["brand_name"],
@@ -49,7 +50,7 @@ class Datum {
         title: json["title"],
         lat: json["lat"],
         long: json["long"],
-        likeCount: json["like_count"],
+        // likeCount: json["like_count"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -58,6 +59,6 @@ class Datum {
         "title": title,
         "lat": lat,
         "long": long,
-        "like_count": likeCount,
+        // "like_count": likeCount,
       };
 }

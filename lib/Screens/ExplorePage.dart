@@ -72,7 +72,7 @@ class _ExplorePageState extends State<ExplorePage> {
             SizedBox(
               height: 5,
             ),
-            Text("${data.likeCount}"),
+            // Text("${data.likeCount}"),
           ],
         ),
       ),

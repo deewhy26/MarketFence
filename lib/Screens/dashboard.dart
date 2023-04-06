@@ -155,7 +155,7 @@ class DashboardState extends State<Dashboard> {
                     width: width,
                     child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: 10,
+                        itemCount: 4,
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
                             onTap: () {
@@ -174,12 +174,12 @@ class DashboardState extends State<Dashboard> {
                                       radius: width * .1,
     child: Image.asset(icon.iconList[index].imageURL),
                                     ),
-                                      Positioned(
-                                          top: height * 0.1,
-                                          left: width * 0.0632,
-                                          child: Text("haha,", style: TextStyle(
-                                              color: Colors.white70),)
-                                      )
+                                      // Positioned(
+                                      //     top: height * 0.1,
+                                      //     left: width * 0.0632,
+                                      //     child: Text("", style: TextStyle(
+                                      //         color: Colors.white70),)
+                                      //)
                                     ]
                                 )
 
