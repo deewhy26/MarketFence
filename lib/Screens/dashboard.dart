@@ -197,97 +197,98 @@ class DashboardState extends State<Dashboard> {
                         fontWeight: FontWeight.bold))
                   ]),
                   SizedBox(height: height * 0.023),
-                  Container(
-                    //color: Colors.orange,
-                    height: width * 0.6076,
-                    //height*.2,
-                    child: toDisplay.isEmpty ? Center(child: Text('Empty')) : ListView.builder(
-                        itemCount: toDisplay.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) =>
-                                      DetailPage(
-                                        offerId: toDisplay[index].offerId,)));
-                              //Navigator.push(context,PageTransition(child: DetailPage(plantId: offerList[index].plantId,), type: PageTransitionType.bottomToTop));
-                            },
-                            child: Container(
-                              width: width * 0.6076,
-                              // height: height*.4,
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: width * 0.0243),
-                              decoration: BoxDecoration(
-                                color: Color(0xff0F3E99),
-                                //Colors.cyan.withOpacity(.8),
-                                borderRadius: BorderRadius.circular(
-                                    width * 0.0486),
-                              ),
-                              child:
-                              Stack(
-                                children: [
-                                  // Positioned(
-                                  //   top:10,
-                                  //   right:20,
-                                  //   child: Container(
-                                  //     height: 50,
-                                  //     width: 50,
-                                  //     child: IconButton(
-                                  //       onPressed:(){
-                                  //         bool isFavorated =!Offer.offerList[index].isFavorated;
-                                  //         offerList[index].isFavorated=isFavorated;
-                                  //       },
-                                  //       icon:Icon(Offer.offerList[index].isFavorated==true
-                                  //           ? Icons.favorite : Icons.favorite_border, color: Color(0xff0F3E99),),
-                                  //       color: Colors.white70,
-                                  //       iconSize: 30,
-                                  //     ),
-                                  //     decoration: BoxDecoration(
-                                  //       color:Colors.white,
-                                  //       borderRadius: BorderRadius.circular(50),
-                                  //
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  Positioned(
-                                    left: width * 0.122,
-                                    right: width * 0.122,
-                                    top: height * 0.0577,
-                                    bottom: height * 0.0577,
-                                    child: Image.asset(
-                                        toDisplay[index].imageURL),),
-                                  Positioned(
-                                    top: 15,
-                                    left: 7,
-                                    //right: 20,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          //"ll",
-                                          toDisplay[index].title,
-                                          style: const TextStyle(
-                                            color: Colors.white70,
-                                            fontSize: 16,
+                  Obx(()
+                    => Container(
+                      //color: Colors.orange,
+                      height: width * 0.6076,
+                      //height*.2,
+                      child: toDisplay.isEmpty ? Center(child: Text('Empty')): ListView.builder(
+                          itemCount: toDisplay.length,
+                          scrollDirection: Axis.horizontal,
 
+                          itemBuilder: (BuildContext context, int index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) =>
+                                        DetailPage(
+                                          offerId: toDisplay[index].offerId,)));
+                                //Navigator.push(context,PageTransition(child: DetailPage(plantId: offerList[index].plantId,), type: PageTransitionType.bottomToTop));
+                              },
+                              child: Container(
+                                width: width * 0.6076,
+                                // height: height*.4,
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: width * 0.0243),
+                                decoration: BoxDecoration(
+                                  color: Color(0xff0F3E99),
+                                  //Colors.cyan.withOpacity(.8),
+                                  borderRadius: BorderRadius.circular(
+                                      width * 0.0486),
+                                ),
+                                child:
+                                Stack(
+                                  children: [
+                                    // Positioned(
+                                    //   top:10,
+                                    //   right:20,
+                                    //   child: Container(
+                                    //     height: 50,
+                                    //     width: 50,
+                                    //     child: IconButton(
+                                    //       onPressed:(){
+                                    //         bool isFavorated =!Offer.offerList[index].isFavorated;
+                                    //         offerList[index].isFavorated=isFavorated;
+                                    //       },
+                                    //       icon:Icon(Offer.offerList[index].isFavorated==true
+                                    //           ? Icons.favorite : Icons.favorite_border, color: Color(0xff0F3E99),),
+                                    //       color: Colors.white70,
+                                    //       iconSize: 30,
+                                    //     ),
+                                    //     decoration: BoxDecoration(
+                                    //       color:Colors.white,
+                                    //       borderRadius: BorderRadius.circular(50),
+                                    //
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                    Positioned(
+                                      left: width * 0.122,
+                                      right: width * 0.122,
+                                      top: height * 0.0577,
+                                      bottom: height * 0.0577,
+                                      child: Image.asset(
+                                          toDisplay[index].imageURL),),
+                                    Positioned(
+                                      top: 15,
+                                      left: 7,
+                                      //right: 20,
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            //"ll",
+                                            toDisplay[index].title,
+                                            style: const TextStyle(
+                                              color: Colors.white70,
+                                              fontSize: 16,
+
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),),
+                                        ],
+                                      ),),
 
-                                ],
+                                  ],
+                                ),
+
+
                               ),
 
-
-                            ),
-
-                          );
-                        }
+                            );
+                          }
+                      ),
                     ),
-
-                  ),
-                ],
+                  )],
               ),
 
 
@@ -301,8 +302,11 @@ class DashboardState extends State<Dashboard> {
       // );
     }
 
+    }
 
 
-  }
+
+
+
 
 

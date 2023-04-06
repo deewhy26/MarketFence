@@ -18,7 +18,7 @@ import 'package:market_fence/notificationservice.dart';
 
 import '../models/Offers.dart';
 
-final List<Offer> toDisplay = [];
+final  toDisplay = [].obs;
 // Create a [Geofence] list.
 class geofenceController extends GetxController {
   final geofenceList = <Geofence>[
