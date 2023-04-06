@@ -39,6 +39,13 @@ dependencies:
   cupertino_icons: ^1.0.2
   floating_navigation_bar: ^0.0.5
   lottie: ^2.3.1
+  geofence_service: ^3.5.0
+  geolocator: ^9.0.2
+#  location: ^5.0.0-dev.8
+  location: ^4.4.0
+  get: ^4.6.5
+  flutter_local_notifications: ^8.2.0
+  timezone: ^0.8.0
 #  curved_navigation_bar: ^1.0.3
 #  glassmorphism: ^3.0.0
 
