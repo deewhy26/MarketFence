@@ -47,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     SizedBox(width: width*.35,),
                     Text(
-                      'John Doe',
+                      'Dhruv Yadav',
                       style: TextStyle(
                         color: Colors.white70,
                         fontSize: 20,
@@ -59,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
                 Text(
-                  'johndoe@gmail.com',
+                  'dhruv@gmail.com',
                   style: TextStyle(
                     color: Colors.white70.withOpacity(.3),
                   ),
@@ -73,10 +73,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: const [
-                      ProfileWidget(
-                        icon: Icons.person,
-                        title: 'My Profile',
-                      ),
+                      // LikeWidget(
+                      //   icon: Icons.Like,
+                      //   title: 'Liked offers',
+                      // ),
                       ProfileWidget(
                         icon: Icons.settings,
                         title: 'Settings',
@@ -85,14 +85,14 @@ class _ProfilePageState extends State<ProfilePage> {
                         icon: Icons.notifications,
                         title: 'Notifications',
                       ),
-                      ProfileWidget(
-                        icon: Icons.chat,
-                        title: 'FAQs',
-                      ),
-                      ProfileWidget(
-                        icon: Icons.share,
-                        title: 'Share',
-                      ),
+                      // ProfileWidget(
+                      //   icon: Icons.chat,
+                      //   title: 'FAQs',
+                      // ),
+                      // ProfileWidget(
+                      //   icon: Icons.share,
+                      //   title: 'Share',
+                      // ),
                       ProfileWidget(
                         icon: Icons.logout,
                         title: 'Log Out',
