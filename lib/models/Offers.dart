@@ -41,8 +41,8 @@ class Offer {
       offerId: 0,
       name:"Nike",
       imageURL: "assets/demo_pic.jpg",
-      lat: 19,
-      long: 73,
+      lat: 19.1232,
+      long: 72.8361,
       desc: "Attention, all sneakerheads and athleisure enthusiasts! Get ready to elevate your fashion game with Nike's latest collection of new arrivals. And the best part? You can now avail an amazing discount of 40% off on all new arrivals from Nike! So, what are you waiting for? Head over to the Nike website or your nearest Nike store to explore the latest collection of new arrivals and take advantage of the amazing 40% off discount offer. Don't miss out on this incredible deal to get your hands on the latest Nike products at a fraction of the price. Hurry, this offer won't last forever!",
       title: "Up to 40% Off on new arrivals",
         isFavorated:false
@@ -51,8 +51,8 @@ class Offer {
       offerId: 1,
       name:"Apple",
       imageURL: "assets/demo_pic.jpg",
-        lat: 20,
-        long: 70,
+        lat: 19.1413,
+        long: 72.8308,
       desc: "Are you looking to upgrade your gadgets with the latest Apple products? Now is the perfect time to do so, as you can avail an amazing discount of 12% off on all Apple products! Don't miss out on this amazing offer and take advantage of the discount while it lasts. Keep in mind that deals and promotions are subject to change and may not be available in all regions, so be sure to check with Apple or authorized resellers for the latest offers.",
       title: "Get 15% Off on all products",
         isFavorated:false
@@ -61,6 +61,8 @@ class Offer {
       offerId: 2,
       name:"Belgian Waffle Co.",
       imageURL: "assets/demo_pic.jpg",
+        lat: 19.0865,
+        long: 72.8890,
       desc: "If you're a fan of delicious waffles, you won't want to miss this amazing deal from the Belgian Waffle Co.! For a limited time, you can get a discount of Rs. 100 off your bill when you visit any of their participating locations.This is a great opportunity to indulge in some mouth-watering waffles without breaking the bank. Whether you prefer classic waffles with butter and syrup, or more adventurous options like Nutella and fruit, the Belgian Waffle Co. has something for everyone.To avail this offer, simply visit a participating Belgian Waffle Co. location and make a purchase of Rs. 500 or more. You'll receive an instant discount of Rs. 100 off your bill, making your waffle experience even sweeter.",
       title: "Get Rs. 100 off on your bill",
         isFavorated:false
@@ -70,7 +72,19 @@ class Offer {
         name:"Belgian Waffle Co.",
         imageURL: "assets/demo_pic.jpg",
         desc: "If you're a fan of delicious waffles, you won't want to miss this amazing deal from the Belgian Waffle Co.! For a limited time, you can get a discount of Rs. 100 off your bill when you visit any of their participating locations.This is a great opportunity to indulge in some mouth-watering waffles without breaking the bank. Whether you prefer classic waffles with butter and syrup, or more adventurous options like Nutella and fruit, the Belgian Waffle Co. has something for everyone.To avail this offer, simply visit a participating Belgian Waffle Co. location and make a purchase of Rs. 500 or more. You'll receive an instant discount of Rs. 100 off your bill, making your waffle experience even sweeter.",
-        title: "Get Rs. 100 off on your bill",
+        title: "Buy one get one free",
+        lat: 18.9250,
+        long: 72.8249,
+        isFavorated:false
+    ),
+    Offer(
+        offerId: 4,
+        name:"Belgian Waffle Co.",
+        imageURL: "assets/demo_pic.jpg",
+        desc: "If you're a fan of delicious waffles, you won't want to miss this amazing deal from the Belgian Waffle Co.! For a limited time, you can get a discount of Rs. 100 off your bill when you visit any of their participating locations.This is a great opportunity to indulge in some mouth-watering waffles without breaking the bank. Whether you prefer classic waffles with butter and syrup, or more adventurous options like Nutella and fruit, the Belgian Waffle Co. has something for everyone.To avail this offer, simply visit a participating Belgian Waffle Co. location and make a purchase of Rs. 500 or more. You'll receive an instant discount of Rs. 100 off your bill, making your waffle experience even sweeter.",
+        title: "Free food and beverage combo on orders of Rs. 2500",
+        lat: 18.9250,
+        long: 72.8249,
         isFavorated:false
     ),];
   // factory Offer.fromJson(Map<String, dynamic>json)
