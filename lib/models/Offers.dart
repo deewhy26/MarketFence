@@ -2,8 +2,8 @@
 // //import 'package:http/http.dart' as http;
 class Offer {
   final int offerId;
-  final String name;
-  final String imageURL;
+  String name;
+  String imageURL;
   final String desc;
   final String title;
   final double lat;
@@ -26,6 +26,7 @@ class Offer {
 
   static List<Offer> offerList = [
     Offer(
+
         offerId: 0,
         name: "Nike",
         imageURL: "assets/demo_pic.jpg",
@@ -33,6 +34,7 @@ class Offer {
             "Attention, all sneakerheads and athleisure enthusiasts! Get ready to elevate your fashion game with Nike's latest collection of new arrivals. And the best part? You can now avail an amazing discount of 40% off on all new arrivals from Nike! So, what are you waiting for? Head over to the Nike website or your nearest Nike store to explore the latest collection of new arrivals and take advantage of the amazing 40% off discount offer. Don't miss out on this incredible deal to get your hands on the latest Nike products at a fraction of the price. Hurry, this offer won't last forever!",
         title: "Up to 40% Off on new arrivals",
         isFavorated: false),
+
     Offer(
         offerId: 1,
         name: "Apple",

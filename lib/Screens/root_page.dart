@@ -58,60 +58,95 @@ class _RootPageState extends State<RootPage> {
         index: _bottomNavIndex,
         children: _widgetOptions(),
       ),
+      bottomNavigationBar:
+      //  Stack(children: [
+      //   BackdropFilter(filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2)),
+      //   Positioned(
+      //     bottom: 20,
+      //     left: width * .04,
+      //     child: Container(
+      //       height: height * .09,
+      //       width: width * .92,
+      //       decoration: BoxDecoration(
+      //           border: Border.all(color: Colors.white.withOpacity(.4)),
+      //           borderRadius: BorderRadius.circular(25),
+      //           gradient: LinearGradient(
+      //               begin: Alignment.topLeft,
+      //               end: Alignment.bottomRight,
+      //               colors: [
+      //                 Colors.cyanAccent.withOpacity(.7),
+      //                 Colors.cyanAccent.withOpacity(.5),
+      //                 Colors.cyanAccent.withOpacity(.3),
+      //                   ],
+    SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
 
-      bottomNavigationBar: Stack(children: [
-        BackdropFilter(filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2)),
-        Positioned(
-          bottom: 20,
-          left: width * .04,
-          child: Container(
-            height: height * .09,
-            width: width * .92,
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.white.withOpacity(.4)),
-                borderRadius: BorderRadius.circular(25),
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Colors.cyanAccent.withOpacity(.7),
-                      Colors.cyanAccent.withOpacity(.5),
-                      Colors.cyanAccent.withOpacity(.3),
+        child: Stack(
 
-                      // Color(0xff00b0ee).withOpacity(.7),
-                      // Color(0xff00b0ee).withOpacity(.5),
-                      // Color(0xff00b0ee).withOpacity(.3),
+          children:[
+            BackdropFilter(filter: ImageFilter.blur(
+              sigmaX: 2,
+              sigmaY: 2
+            )),
+            Positioned(
+              bottom:20 ,
+              left: width*.04,
+              child: Container(
+                height: height*.09,
+                width: width*.92,
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.white.withOpacity(.4)),
+                    borderRadius: BorderRadius.circular(25),
+                    gradient: LinearGradient(
+                        begin:Alignment.topLeft,
+                        end:Alignment.bottomRight,
+                        colors: [
 
-                      // Colors.white.withOpacity(0.4),
-                      // Colors.white70.withOpacity(0.1),
-                    ])),
+                          Colors.cyanAccent.withOpacity(.7),
+                          Colors.cyanAccent.withOpacity(.5),
+                          Colors.cyanAccent.withOpacity(.3),
+
+                          // Color(0xff00b0ee).withOpacity(.7),
+                          // Color(0xff00b0ee).withOpacity(.5),
+                          // Color(0xff00b0ee).withOpacity(.3),
+
+                          // Colors.white.withOpacity(0.4),
+                          // Colors.white70.withOpacity(0.1),
+                        ]
+                    )
+                ),
+              ),
+            ),
+            FloatingNavigationBar(
+            backgroundColor: Colors.transparent,
+            iconColor: Colors.black87,
+            textStyle: TextStyle(
+              color: Colors.black87,
+              fontSize: 14.0,
+            ),
+            iconSize: 20.0,
+            //barHeight: 20,
+              barWidth: width*0.95,
+            indicatorHeight: 4,
+            indicatorWidth: 40,
+            indicatorColor: Colors.black38.withOpacity(0.4),
+            items: [
+              NavBarItems(icon:Icons.dashboard,title: "Dashboard"),
+              NavBarItems( icon: Icons.search,title: "Explore"),
+              NavBarItems(icon: Icons.account_balance_outlined, title: "Bank"),
+              NavBarItems(icon: Icons.person_outline,title: "Profile"),
+            ],
+            onChanged: (value) {
+             setState(() {
+               _bottomNavIndex=value;
+             });
+            },
           ),
+          ]
         ),
-        FloatingNavigationBar(
-          backgroundColor: Colors.transparent,
-          iconColor: Colors.black87,
-          textStyle: TextStyle(
-            color: Colors.black87,
-            fontSize: 14.0,
-          ),
-          iconSize: 20.0,
-          //barHeight: 20,
-          indicatorHeight: 4,
-          indicatorWidth: 40,
-          indicatorColor: Colors.black38.withOpacity(0.4),
-          items: [
-            NavBarItems(icon: Icons.dashboard, title: "Dashboard"),
-            NavBarItems(icon: Icons.search, title: "Explore"),
-            NavBarItems(icon: Icons.account_balance_outlined, title: "Bank"),
-            NavBarItems(icon: Icons.person_outline, title: "Profile"),
-          ],
-          onChanged: (value) {
-            setState(() {
-              _bottomNavIndex = value;
-            });
-          },
-        ),
-      ]),
+      ),
+
+
 
       // CurvedNavigationBar(
       //   // backgroundColor: Colors.transparent,
@@ -130,6 +165,7 @@ class _RootPageState extends State<RootPage> {
       //     });
       //   },
       // ),
+
     );
   }
 }
