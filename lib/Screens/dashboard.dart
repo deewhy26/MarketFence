@@ -1,7 +1,10 @@
 
 
+
 import 'dart:async';
 
+
+import "/models/icon.dart";
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -10,7 +13,11 @@ import 'package:market_fence/Screens/root_page.dart';
 
 
 import '../models/Offers.dart';
+
 import 'Datum.dart';
+
+import '../models/icon.dart';
+
 import 'detail_page.dart';
 import 'root_page.dart';
 import 'package:geofence_service/geofence_service.dart';
@@ -37,6 +44,7 @@ class DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     int selectedIndex = 0;
+
 
     final height = MediaQuery
         .of(context)
@@ -164,6 +172,7 @@ class DashboardState extends State<Dashboard> {
                                       backgroundColor: Color(0xff00AEEF),
                                       //Colors.white70,
                                       radius: width * .1,
+    child: Image.asset(icon.iconList[index].imageURL),
                                     ),
                                       Positioned(
                                           top: height * 0.1,
@@ -291,6 +300,8 @@ class DashboardState extends State<Dashboard> {
       //   child: Center(child: Text('Dashboard',style: TextStyle(color: Colors.white),)),
       // );
     }
+
+
 
   }
 
